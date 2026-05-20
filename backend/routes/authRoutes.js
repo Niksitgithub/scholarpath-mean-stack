@@ -1,36 +1,32 @@
-import { Routes } from '@angular/router';
+const express = require('express');
 
-import { LoginComponent } from './login.component';
-import { RegisterComponent } from './register.component';
-import { DashboardComponent } from './dashboard.component';
-import { ProfileComponent } from './profile.component';
-import { ScholarshipDetailComponent } from './scholarship-detail.component';
+const router = express.Router();
 
-export const routes: Routes = [
+const {
+    registerUser,
+    loginUser
+} = require('../controllers/authController');
 
-  {
-    path: '',
-    component: DashboardComponent
-  },
 
-  {
-    path: 'login',
-    component: LoginComponent
-  },
+// TEST ROUTE
 
-  {
-    path: 'register',
-    component: RegisterComponent
-  },
+router.get('/test', (req, res) => {
 
-  {
-    path: 'profile',
-    component: ProfileComponent
-  },
+    res.json({
+        message: 'Auth route working'
+    });
 
-  {
-    path: 'scholarship/:id',
-    component: ScholarshipDetailComponent
-  }
+});
 
-];
+
+// REGISTER
+
+router.post('/register', registerUser);
+
+
+// LOGIN
+
+router.post('/login', loginUser);
+
+
+module.exports = router;
