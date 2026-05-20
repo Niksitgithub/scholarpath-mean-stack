@@ -6,6 +6,7 @@ require('dotenv').config();
 const validateEnv = require('./validateEnv');
 const errorHandler = require('./errorHandler');
 const authRoutes = require('./routes/authRoutes');
+const scholarshipRoutes = require('./routes/scholarshipRoutes');
 
 // Validate environment variables before starting
 validateEnv();
@@ -39,6 +40,7 @@ app.get('/', (req, res) => {
 
 // API Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/scholarships', scholarshipRoutes);
 
 // 404 Handler
 app.use((req, res) => {

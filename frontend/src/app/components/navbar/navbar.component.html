@@ -1,0 +1,24 @@
+<nav class="navbar">
+  <div class="nav-container">
+    <a routerLink="/" class="nav-logo">
+      <span class="logo-icon">🎓</span>
+      <span class="logo-text">Scholar<span class="highlight">Path</span></span>
+    </a>
+
+    <div class="nav-links" *ngIf="authService.isLoggedIn()">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-item">Dashboard</a>
+      <a routerLink="/profile" routerLinkActive="active" class="nav-item">Profile</a>
+    </div>
+
+    <div class="nav-auth">
+      <ng-container *ngIf="authService.isLoggedIn(); else loggedOut">
+        <span class="welcome-msg">Welcome, {{ getStudentName() }}</span>
+        <button (click)="logout()" class="btn-logout">Logout</button>
+      </ng-container>
+      <ng-template #loggedOut>
+        <a routerLink="/login" routerLinkActive="active" class="btn-login">Login</a>
+        <a routerLink="/register" routerLinkActive="active" class="btn-register">Register</a>
+      </ng-template>
+    </div>
+  </div>
+</nav>

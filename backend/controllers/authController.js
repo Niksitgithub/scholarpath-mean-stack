@@ -132,7 +132,60 @@ const loginUser = async (req, res) => {
 };
 
 
+// GET USER PROFILE
+const getProfile = async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id).select('-password');
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+// UPDATE USER PROFILE
+const updateProfile = async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        user.name = req.body.name || user.name;
+        user.caste = req.body.caste !== undefined ? req.body.caste : user.caste;
+        user.income = req.body.income !== undefined ? req.body.income : user.income;
+        user.marks = req.body.marks !== undefined ? req.body.marks : user.marks;
+        user.state = req.body.state !== undefined ? req.body.state : user.state;
+        user.gender = req.body.gender !== undefined ? req.body.gender : user.gender;
+        user.stream = req.body.stream !== undefined ? req.body.stream : user.stream;
+        user.disability = req.body.disability !== undefined ? req.body.disability : user.disability;
+        user.area = req.body.area !== undefined ? req.body.area : user.area;
+
+        const updatedUser = await user.save();
+        res.status(200).json({
+            id: updatedUser._id,
+            name: updatedUser.name,
+            email: updatedUser.email,
+            role: updatedUser.role,
+            caste: updatedUser.caste,
+            income: updatedUser.income,
+            marks: updatedUser.marks,
+            state: updatedUser.state,
+            gender: updatedUser.gender,
+            stream: updatedUser.stream,
+            disability: updatedUser.disability,
+            area: updatedUser.area
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 module.exports = {
     registerUser,
-    loginUser
+    loginUser,
+    getProfile,
+    updateProfile
 };

@@ -1,0 +1,117 @@
+<div class="profile-page">
+  <div class="profile-card">
+    <div class="profile-header">
+      <h2>Academic & Matching Profile</h2>
+      <p>Fill out your details accurately. The recommendation engine matches scholarships based on these criteria.</p>
+    </div>
+
+    <div class="loading-spinner" *ngIf="loading">
+      <div class="spinner"></div>
+      <p>Fetching your profile details...</p>
+    </div>
+
+    <form (ngSubmit)="saveProfile()" #profileForm="ngForm" class="profile-form" *ngIf="!loading">
+      <!-- Personal Details Section -->
+      <h3 class="section-title">Personal Information</h3>
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" [(ngModel)]="name" name="name" required />
+        </div>
+
+        <div class="form-group">
+          <label for="gender">Gender</label>
+          <select id="gender" [(ngModel)]="gender" name="gender">
+            <option *ngFor="let g of gendersList" [value]="g">{{ g }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="caste">Caste Category</label>
+          <select id="caste" [(ngModel)]="caste" name="caste">
+            <option *ngFor="let c of castesList" [value]="c">{{ c }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="state">State of Residence</label>
+          <select id="state" [(ngModel)]="state" name="state" required>
+            <option value="" disabled>Select State</option>
+            <option *ngFor="let s of statesList" [value]="s">{{ s }}</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Academic & Financial Details -->
+      <h3 class="section-title">Academic & Financial Criteria</h3>
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="stream">Academic Stream</label>
+          <select id="stream" [(ngModel)]="stream" name="stream">
+            <option *ngFor="let st of streamsList" [value]="st">{{ st }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="marks">Academic Marks (Percentage / GPA %)</label>
+          <input 
+            type="number" 
+            id="marks" 
+            [(ngModel)]="marks" 
+            name="marks" 
+            min="0" 
+            max="100" 
+            placeholder="e.g. 85" 
+            required 
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="income">Family Annual Income (INR)</label>
+          <input 
+            type="number" 
+            id="income" 
+            [(ngModel)]="income" 
+            name="income" 
+            placeholder="e.g. 250000" 
+            required 
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="area">Residential Area</label>
+          <select id="area" [(ngModel)]="area" name="area">
+            <option *ngFor="let a of areasList" [value]="a">{{ a }}</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Additional Details -->
+      <h3 class="section-title">Additional Status</h3>
+      <div class="checkbox-group">
+        <label class="checkbox-container">
+          <input type="checkbox" [(ngModel)]="disability" name="disability" />
+          <span class="checkmark"></span>
+          I identify as Specially Abled / Having a Disability
+        </label>
+      </div>
+
+      <!-- Alerts -->
+      <div class="alert-success" *ngIf="successMessage">
+        <span class="alert-icon">✔️</span>
+        <span class="alert-text">{{ successMessage }}</span>
+      </div>
+
+      <div class="alert-error" *ngIf="errorMessage">
+        <span class="alert-icon">⚠️</span>
+        <span class="alert-text">{{ errorMessage }}</span>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" [disabled]="!profileForm.form.valid || saving" class="btn-save">
+          {{ saving ? 'Saving Changes...' : 'Save & Match Scholarships' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

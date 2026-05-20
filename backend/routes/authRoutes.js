@@ -4,8 +4,12 @@ const router = express.Router();
 
 const {
     registerUser,
-    loginUser
+    loginUser,
+    getProfile,
+    updateProfile
 } = require('../controllers/authController');
+const { protect } = require('../middleware/authMiddleware');
+const { validateRegister, validateLogin, validateRequest } = require('../validators/authValidators');
 
 
 // TEST ROUTE
@@ -21,12 +25,16 @@ router.get('/test', (req, res) => {
 
 // REGISTER
 
-router.post('/register', registerUser);
+router.post('/register', validateRegister, validateRequest, registerUser);
 
 
 // LOGIN
 
-router.post('/login', loginUser);
+router.post('/login', validateLogin, validateRequest, loginUser);
+
+// PROFILE ROUTES
+router.get('/profile', protect, getProfile);
+router.put('/profile', protect, updateProfile);
 
 
 module.exports = router;

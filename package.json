@@ -14,7 +14,8 @@
     "test": "npm run test --workspaces",
     "start:backend": "npm start -w backend",
     "start:frontend": "npm start -w frontend",
-    "start": "npm start --workspaces"
+    "start": "npm start --workspaces",
+    "seed": "node backend/utils/seedData.js"
   },
   "keywords": [
     "scholarship",

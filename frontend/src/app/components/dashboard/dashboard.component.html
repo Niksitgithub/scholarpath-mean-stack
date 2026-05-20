@@ -1,0 +1,185 @@
+<div class="dashboard-page">
+  <div class="dashboard-container">
+    
+    <!-- Profile Summary Ribbon -->
+    <div class="profile-ribbon" *ngIf="studentProfile">
+      <div class="ribbon-info">
+        <span class="ribbon-icon">🎯</span>
+        <div>
+          <h4>Current Match Profile</h4>
+          <p>
+            Marks: <strong>{{ studentProfile.marks || 0 }}%</strong> | 
+            Income Limit: <strong>₹{{ studentProfile.income | number }}</strong> | 
+            Caste: <strong>{{ studentProfile.caste || 'General' }}</strong> | 
+            Stream: <strong>{{ studentProfile.stream || 'N/A' }}</strong> |
+            State: <strong>{{ studentProfile.state || 'N/A' }}</strong>
+          </p>
+        </div>
+      </div>
+      <a routerLink="/profile" class="btn-edit-profile">Update Criteria</a>
+    </div>
+
+    <!-- Analytics Cards -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon magenta">🎉</div>
+        <div class="stat-info">
+          <h3>{{ recommendedScholarships.length }}</h3>
+          <p>Recommended Matches</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon blue">💰</div>
+        <div class="stat-info">
+          <h3>₹{{ getTotalRecommendedValue() | number }}</h3>
+          <p>Potential Funding Value</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon purple">⏰</div>
+        <div class="stat-info">
+          <h3>{{ getClosestDeadlineDays() }}</h3>
+          <p>Urgent Deadline</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab Navigation -->
+    <div class="tabs-header">
+      <button 
+        (click)="activeTab = 'recommended'" 
+        [class.active]="activeTab === 'recommended'" 
+        class="tab-btn"
+      >
+        Recommended for You <span class="badge">{{ recommendedScholarships.length }}</span>
+      </button>
+      <button 
+        (click)="activeTab = 'explore'" 
+        [class.active]="activeTab === 'explore'" 
+        class="tab-btn"
+      >
+        Explore All Scholarships
+      </button>
+    </div>
+
+    <!-- Tab Panels -->
+    <div class="tab-content">
+      
+      <!-- RECOMMENDED TAB -->
+      <div *ngIf="activeTab === 'recommended'" class="tab-panel">
+        <div class="loading-state" *ngIf="loadingRec">
+          <div class="spinner"></div>
+          <p>Searching matches for you...</p>
+        </div>
+
+        <div class="empty-state" *ngIf="!loadingRec && recommendedScholarships.length === 0">
+          <span class="empty-icon">🤷</span>
+          <h3>No perfect matches found</h3>
+          <p>Try updating your academic marks, caste status, or state criteria in your profile to trigger new matches.</p>
+          <a routerLink="/profile" class="btn-primary">Update Matching Profile</a>
+        </div>
+
+        <div class="scholarship-grid" *ngIf="!loadingRec && recommendedScholarships.length > 0">
+          <div class="scholarship-card" *ngFor="let s of recommendedScholarships">
+            <div class="card-header">
+              <span class="provider">{{ s.provider }}</span>
+              <span class="amount">₹{{ s.amount | number }}</span>
+            </div>
+            
+            <h3 class="title">{{ s.title }}</h3>
+            <p class="description">{{ s.description | slice:0:120 }}...</p>
+            
+            <div class="eligibility-tags">
+              <span class="tag" *ngIf="s.eligibility.minMarks > 0">Min Marks: {{ s.eligibility.minMarks }}%</span>
+              <span class="tag" *ngIf="s.eligibility.maxIncome && s.eligibility.maxIncome < 10000000">Income &lt; ₹{{ s.eligibility.maxIncome | number }}</span>
+              <span class="tag" *ngFor="let caste of s.eligibility.castes">{{ caste }}</span>
+              <span class="tag" *ngFor="let stream of s.eligibility.streams">{{ stream }}</span>
+              <span class="tag alert-tag" *ngIf="s.eligibility.disabilityRequired">Specially Abled</span>
+            </div>
+
+            <div class="card-footer">
+              <span class="deadline">
+                ⌛ <strong>{{ getDaysRemaining(s.deadline) }} days left</strong> ({{ s.deadline | date:'mediumDate' }})
+              </span>
+              <a [routerLink]="['/scholarship', s._id]" class="btn-details">View Details</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EXPLORE TAB -->
+      <div *ngIf="activeTab === 'explore'" class="tab-panel">
+        
+        <!-- Filter Controls -->
+        <div class="filter-bar">
+          <div class="search-input-wrapper">
+            <span class="search-icon">🔍</span>
+            <input 
+              type="text" 
+              [(ngModel)]="searchQuery" 
+              (ngModelChange)="applyFilters()" 
+              placeholder="Search by title, description or provider..." 
+            />
+          </div>
+
+          <div class="selects-row">
+            <select [(ngModel)]="selectedStream" (change)="applyFilters()">
+              <option value="">All Streams</option>
+              <option *ngFor="let st of streamsList" [value]="st">{{ st }}</option>
+            </select>
+
+            <select [(ngModel)]="selectedCaste" (change)="applyFilters()">
+              <option value="">All Castes</option>
+              <option *ngFor="let c of castesList" [value]="c">{{ c }}</option>
+            </select>
+
+            <button (click)="resetFilters()" class="btn-reset">Reset</button>
+          </div>
+        </div>
+
+        <div class="loading-state" *ngIf="loadingAll">
+          <div class="spinner"></div>
+          <p>Fetching scholarships...</p>
+        </div>
+
+        <div class="empty-state" *ngIf="!loadingAll && allScholarships.length === 0">
+          <span class="empty-icon">🔍</span>
+          <h3>No scholarships found</h3>
+          <p>Try refining your search query or reset your selection filters.</p>
+          <button (click)="resetFilters()" class="btn-primary">Reset All Filters</button>
+        </div>
+
+        <div class="scholarship-grid" *ngIf="!loadingAll && allScholarships.length > 0">
+          <div class="scholarship-card" *ngFor="let s of allScholarships">
+            <div class="card-header">
+              <span class="provider">{{ s.provider }}</span>
+              <span class="amount">₹{{ s.amount | number }}</span>
+            </div>
+            
+            <h3 class="title">{{ s.title }}</h3>
+            <p class="description">{{ s.description | slice:0:120 }}...</p>
+            
+            <div class="eligibility-tags">
+              <span class="tag" *ngIf="s.eligibility.minMarks > 0">Min Marks: {{ s.eligibility.minMarks }}%</span>
+              <span class="tag" *ngIf="s.eligibility.maxIncome && s.eligibility.maxIncome < 10000000">Income &lt; ₹{{ s.eligibility.maxIncome | number }}</span>
+              <span class="tag" *ngFor="let caste of s.eligibility.castes">{{ caste }}</span>
+              <span class="tag" *ngFor="let stream of s.eligibility.streams">{{ stream }}</span>
+            </div>
+
+            <div class="card-footer">
+              <span class="deadline">
+                ⌛ {{ getDaysRemaining(s.deadline) }} days left
+              </span>
+              <a [routerLink]="['/scholarship', s._id]" class="btn-details">View Details</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>

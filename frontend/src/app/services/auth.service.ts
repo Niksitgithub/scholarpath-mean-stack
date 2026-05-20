@@ -62,4 +62,30 @@ export class AuthService {
 
   }
 
+  private getHeaders() {
+    const token = localStorage.getItem('token');
+    return {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    };
+  }
+
+  getProfile() {
+    return this.http.get(`${this.apiUrl}/profile`, this.getHeaders());
+  }
+
+  updateProfile(profileData: any) {
+    return this.http.put(`${this.apiUrl}/profile`, profileData, this.getHeaders()).pipe(
+      tap((updatedStudent: any) => {
+        localStorage.setItem('student', JSON.stringify(updatedStudent));
+      })
+    );
+  }
+
+  getStudentDetails() {
+    const student = localStorage.getItem('student');
+    return student ? JSON.parse(student) : null;
+  }
+
 }

@@ -39,7 +39,7 @@ export class RegisterComponent {
 
         console.log('Register Success', res);
 
-        this.router.navigate(['/']);
+        this.router.navigate(['/profile']);
 
       },
 
