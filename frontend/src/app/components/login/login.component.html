@@ -9,7 +9,7 @@
       <div class="form-group">
         <label for="email">Email Address</label>
         <div class="input-wrapper">
-          <span class="input-icon">✉️</span>
+          <i class="bi bi-envelope input-icon"></i>
           <input
             type="email"
             id="email"
@@ -25,7 +25,7 @@
       <div class="form-group">
         <label for="password">Password</label>
         <div class="input-wrapper">
-          <span class="input-icon">🔒</span>
+          <i class="bi bi-lock input-icon"></i>
           <input
             type="password"
             id="password"
@@ -43,7 +43,7 @@
       </button>
 
       <div class="error-container" *ngIf="errorMessage">
-        <span class="error-icon">⚠️</span>
+        <i class="bi bi-exclamation-triangle error-icon"></i>
         <span class="error-text">{{ errorMessage }}</span>
       </div>
 

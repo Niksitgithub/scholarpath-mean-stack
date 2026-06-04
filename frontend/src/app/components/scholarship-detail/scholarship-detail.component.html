@@ -1,7 +1,7 @@
 <div class="detail-page">
   <div class="detail-container">
     
-    <a routerLink="/" class="btn-back">⬅️ Back to Dashboard</a>
+    <a routerLink="/" class="btn-back"><i class="bi bi-arrow-left"></i> Back to Dashboard</a>
 
     <div class="loading-state" *ngIf="loading">
       <div class="spinner"></div>
@@ -9,7 +9,7 @@
     </div>
 
     <div class="error-state" *ngIf="!loading && errorMessage">
-      <span class="error-icon">⚠️</span>
+      <i class="bi bi-exclamation-triangle-fill error-icon"></i>
       <h3>Failed to load</h3>
       <p>{{ errorMessage }}</p>
       <a routerLink="/" class="btn-primary">Return to Dashboard</a>
@@ -47,7 +47,7 @@
           <h3>Eligibility Specifications</h3>
           <ul class="criteria-list">
             <li>
-              <span class="criteria-icon">📈</span>
+              <span class="criteria-icon"><i class="bi bi-graph-up-arrow"></i></span>
               <div>
                 <strong>Minimum Marks</strong>
                 <p>{{ scholarship.eligibility.minMarks }}% or higher</p>
@@ -55,7 +55,7 @@
             </li>
             
             <li>
-              <span class="criteria-icon">💼</span>
+              <span class="criteria-icon"><i class="bi bi-wallet2"></i></span>
               <div>
                 <strong>Maximum Annual Income</strong>
                 <p *ngIf="scholarship.eligibility.maxIncome && scholarship.eligibility.maxIncome < 10000000">₹{{ scholarship.eligibility.maxIncome | number }} or less</p>
@@ -64,7 +64,7 @@
             </li>
 
             <li>
-              <span class="criteria-icon">👥</span>
+              <span class="criteria-icon"><i class="bi bi-people"></i></span>
               <div>
                 <strong>Eligible Castes</strong>
                 <p>{{ scholarship.eligibility.castes.length > 0 ? (scholarship.eligibility.castes.join(', ')) : 'Open to All Categories' }}</p>
@@ -72,7 +72,7 @@
             </li>
 
             <li>
-              <span class="criteria-icon">📍</span>
+              <span class="criteria-icon"><i class="bi bi-geo-alt"></i></span>
               <div>
                 <strong>Target States</strong>
                 <p>{{ scholarship.eligibility.states.length > 0 ? (scholarship.eligibility.states.join(', ')) : 'All States Eligible' }}</p>
@@ -80,7 +80,7 @@
             </li>
 
             <li>
-              <span class="criteria-icon">🎓</span>
+              <span class="criteria-icon"><i class="bi bi-mortarboard"></i></span>
               <div>
                 <strong>Academic Stream</strong>
                 <p>{{ scholarship.eligibility.streams.length > 0 ? (scholarship.eligibility.streams.join(', ')) : 'Open to All Streams' }}</p>
@@ -88,7 +88,7 @@
             </li>
 
             <li>
-              <span class="criteria-icon">♿</span>
+              <span class="criteria-icon"><i class="bi bi-universal-access"></i></span>
               <div>
                 <strong>Disability Requirement</strong>
                 <p>{{ scholarship.eligibility.disabilityRequired ? 'Yes (For Specially Abled Students)' : 'No (Open to all abilities)' }}</p>
@@ -96,7 +96,7 @@
             </li>
 
             <li>
-              <span class="criteria-icon">🌍</span>
+              <span class="criteria-icon"><i class="bi bi-globe"></i></span>
               <div>
                 <strong>Region Location</strong>
                 <p>{{ scholarship.eligibility.area || 'All' }} Area</p>
@@ -107,7 +107,7 @@
           <div class="divider"></div>
 
           <div class="deadline-section">
-            ⌛ <strong>{{ getDaysRemaining(scholarship.deadline) }} days left</strong>
+            <i class="bi bi-clock-history"></i> <strong>{{ getDaysRemaining(scholarship.deadline) }} days left</strong>
             <p>Deadline: {{ scholarship.deadline | date:'longDate' }}</p>
           </div>
 

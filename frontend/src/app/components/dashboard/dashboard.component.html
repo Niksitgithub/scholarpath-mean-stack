@@ -4,7 +4,7 @@
     <!-- Profile Summary Ribbon -->
     <div class="profile-ribbon" *ngIf="studentProfile">
       <div class="ribbon-info">
-        <span class="ribbon-icon">🎯</span>
+        <i class="bi bi-sliders2 ribbon-icon"></i>
         <div>
           <h4>Current Match Profile</h4>
           <p>
@@ -22,7 +22,7 @@
     <!-- Analytics Cards -->
     <div class="stats-grid">
       <div class="stat-card">
-        <div class="stat-icon magenta">🎉</div>
+        <div class="stat-icon magenta"><i class="bi bi-stars"></i></div>
         <div class="stat-info">
           <h3>{{ recommendedScholarships.length }}</h3>
           <p>Recommended Matches</p>
@@ -30,7 +30,7 @@
       </div>
 
       <div class="stat-card">
-        <div class="stat-icon blue">💰</div>
+        <div class="stat-icon blue"><i class="bi bi-cash-stack"></i></div>
         <div class="stat-info">
           <h3>₹{{ getTotalRecommendedValue() | number }}</h3>
           <p>Potential Funding Value</p>
@@ -38,7 +38,7 @@
       </div>
 
       <div class="stat-card">
-        <div class="stat-icon purple">⏰</div>
+        <div class="stat-icon purple"><i class="bi bi-hourglass-split"></i></div>
         <div class="stat-info">
           <h3>{{ getClosestDeadlineDays() }}</h3>
           <p>Urgent Deadline</p>
@@ -75,7 +75,7 @@
         </div>
 
         <div class="empty-state" *ngIf="!loadingRec && recommendedScholarships.length === 0">
-          <span class="empty-icon">🤷</span>
+          <i class="bi bi-emoji-neutral empty-icon"></i>
           <h3>No perfect matches found</h3>
           <p>Try updating your academic marks, caste status, or state criteria in your profile to trigger new matches.</p>
           <a routerLink="/profile" class="btn-primary">Update Matching Profile</a>
@@ -101,7 +101,7 @@
 
             <div class="card-footer">
               <span class="deadline">
-                ⌛ <strong>{{ getDaysRemaining(s.deadline) }} days left</strong> ({{ s.deadline | date:'mediumDate' }})
+                <i class="bi bi-clock-history"></i> <strong>{{ getDaysRemaining(s.deadline) }} days left</strong> ({{ s.deadline | date:'mediumDate' }})
               </span>
               <a [routerLink]="['/scholarship', s._id]" class="btn-details">View Details</a>
             </div>
@@ -115,7 +115,7 @@
         <!-- Filter Controls -->
         <div class="filter-bar">
           <div class="search-input-wrapper">
-            <span class="search-icon">🔍</span>
+            <i class="bi bi-search search-icon"></i>
             <input 
               type="text" 
               [(ngModel)]="searchQuery" 
@@ -145,7 +145,7 @@
         </div>
 
         <div class="empty-state" *ngIf="!loadingAll && allScholarships.length === 0">
-          <span class="empty-icon">🔍</span>
+          <i class="bi bi-search empty-icon"></i>
           <h3>No scholarships found</h3>
           <p>Try refining your search query or reset your selection filters.</p>
           <button (click)="resetFilters()" class="btn-primary">Reset All Filters</button>
@@ -170,7 +170,7 @@
 
             <div class="card-footer">
               <span class="deadline">
-                ⌛ {{ getDaysRemaining(s.deadline) }} days left
+                <i class="bi bi-clock-history"></i> {{ getDaysRemaining(s.deadline) }} days left
               </span>
               <a [routerLink]="['/scholarship', s._id]" class="btn-details">View Details</a>
             </div>

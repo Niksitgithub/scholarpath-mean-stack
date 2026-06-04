@@ -98,12 +98,12 @@
 
       <!-- Alerts -->
       <div class="alert-success" *ngIf="successMessage">
-        <span class="alert-icon">✔️</span>
+        <i class="bi bi-check-circle-fill alert-icon"></i>
         <span class="alert-text">{{ successMessage }}</span>
       </div>
 
       <div class="alert-error" *ngIf="errorMessage">
-        <span class="alert-icon">⚠️</span>
+        <i class="bi bi-exclamation-triangle-fill alert-icon"></i>
         <span class="alert-text">{{ errorMessage }}</span>
       </div>
 
