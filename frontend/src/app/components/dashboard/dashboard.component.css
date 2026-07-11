@@ -9,6 +9,59 @@
   margin: 0 auto;
 }
 
+.dashboard-spotlight {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.2rem;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.18), rgba(139, 92, 246, 0.1));
+  border: 1px solid rgba(129, 140, 248, 0.25);
+  border-radius: 18px;
+  padding: 1.4rem 1.6rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 12px 28px rgba(99, 102, 241, 0.08);
+}
+
+.spotlight-text h2 {
+  margin: 0.25rem 0 0;
+  font-size: 1.32rem;
+  line-height: 1.4;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.spotlight-kicker {
+  display: inline-block;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 800;
+  color: var(--primary-light);
+}
+
+.spotlight-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+}
+
+.spotlight-pill {
+  border: 1px solid rgba(129, 140, 248, 0.3);
+  background: rgba(9, 14, 28, 0.4);
+  color: var(--text-primary);
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .dashboard-spotlight {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
 /* Profile Ribbon */
 .profile-ribbon {
   display: flex;
