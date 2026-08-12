@@ -2,11 +2,12 @@
   position: sticky;
   top: 0;
   z-index: 1000;
-  background: rgba(8, 12, 24, 0.78);
+  background: rgba(10, 14, 39, 0.85);
   backdrop-filter: var(--backdrop-blur);
   -webkit-backdrop-filter: var(--backdrop-blur);
-  border-bottom: 1px solid rgba(148, 163, 184, 0.22);
+  border-bottom: 1px solid var(--border-color);
   transition: var(--transition-smooth);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .nav-container {
@@ -70,14 +71,15 @@
 
 .nav-item:hover {
   color: var(--text-primary);
-  background: rgba(59, 130, 246, 0.12);
+  background: rgba(59, 130, 246, 0.15);
+  border-color: rgba(59, 130, 246, 0.2);
 }
 
 .nav-item.active {
   color: var(--text-primary);
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.18), rgba(20, 184, 166, 0.14));
-  border: 1px solid rgba(20, 184, 166, 0.25);
-  box-shadow: 0 0 15px rgba(20, 184, 166, 0.12);
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(20, 184, 166, 0.15));
+  border: 1px solid rgba(59, 130, 246, 0.35);
+  box-shadow: 0 0 18px rgba(59, 130, 246, 0.15);
 }
 
 .nav-auth {
@@ -145,12 +147,13 @@
   font-weight: 600;
   font-size: 0.9rem;
   padding: 0.5rem 1.25rem;
-  border-radius: 8px;
+  border-radius: 10px;
+  border: none;
   transition: var(--transition-smooth);
-  box-shadow: 0 4px 14px rgba(20, 184, 166, 0.25);
+  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
 }
 
 .btn-register:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(20, 184, 166, 0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
 }
